@@ -68,7 +68,7 @@ export default function LoginPage() {
         <div className="bg-white shadow-md rounded-lg p-8">
           <div className="flex flex-col items-center mb-6">
             <div className="bg-blue-500 text-white rounded-full w-12 h-12 flex justify-center items-center mb-4">
-              <span className="text-2xl">��</span>
+              <span className="text-2xl">NUM</span>
             </div>
             <h1 className="text-2xl font-bold text-center text-gray-900">
               Нэвтрэх

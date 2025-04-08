@@ -12,6 +12,7 @@ const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
   const { isAuthenticated, loading, hasRole } = useAuth();
   const router = useRouter();
 
+  
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       router.push('/login');
