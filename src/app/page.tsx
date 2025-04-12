@@ -48,7 +48,7 @@ export default function Home() {
           <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-10">Онцлог шинж чанарууд</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg rounded-lg p-6 flex flex-col">
-              <h3 className="text-xl font-semibold mb-3">Хэрэглэгчийн удирдлага</h3>
+              <h3 className="text-xl font-semibold mb-3">Хэрэглэгчийн эрхүүд</h3>
               <p className="text-blue-100 flex-grow">Хэрэглэгчийн эрх, зөвшөөрлийг хялбархан удирдах боломжтой.</p>
             </div>
             <div className="bg-gradient-to-br from-pink-500 to-purple-600 text-white shadow-lg rounded-lg p-6 flex flex-col">

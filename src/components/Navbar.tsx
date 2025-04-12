@@ -46,7 +46,7 @@ const Navbar = () => {
 
   const navigationItems = [
     { text: 'Нүүр', icon: <Icons.Dashboard />, href: '/auth/dashboard', roles: ['ROLE_USER', 'ROLE_ADMIN'] },
-    { text: 'Хэрэглэгчид', icon: <Icons.Person />, href: '/auth/users', roles: ['ROLE_ADMIN'] },
+    { text: 'Эрхүүд', icon: <Icons.Person />, href: '/auth/users', roles: ['ROLE_ADMIN'] },
     // { text: 'Тохиргоо', icon: <Icons.Admin />, href: '/auth/settings', roles: ['ROLE_ADMIN'] }, // Example for Admin role
   ];
 

@@ -36,20 +36,28 @@ export default function ProfilePage() {
   // Хэрэглэгчийн дэлгэрэнгүй мэдээлэл авах
   useEffect(() => {
     async function fetchUserDetails() {
-      if (user && user.id) {
+      if (user && user.sisiId) {
         try {
-          const details = await UserService.getUserDetailsByAuthId(user.id);
+          const details = await UserService.getUserDetailsBySisiId(user.sisiId);
           setUserDetails(details);
-        } catch (error) {
+        } catch (error: any) {
           console.error('Error fetching user details:', error);
+          // Алдаа гарсан тохиолдолд хэрэглэгчид мэдэгдэх
+          enqueueSnackbar('Хэрэглэгчийн мэдээлэл татахад алдаа гарлаа', { 
+            variant: 'error',
+            anchorOrigin: { vertical: 'top', horizontal: 'center' }
+          });
         } finally {
           setLoading(false);
         }
+      } else {
+
+        setLoading(false);
       }
     }
     
     fetchUserDetails();
-  }, [user]);
+  }, [user, enqueueSnackbar]);
 
   const formik = useFormik({
     initialValues: {
@@ -120,7 +128,7 @@ export default function ProfilePage() {
           setUserDetails(updatedUser);
           enqueueSnackbar('Хэрэглэгчийн мэдээлэл амжилттай шинэчлэгдлээ', { variant: 'success' });
           setEditMode(false);
-        } else if (user && user.id) {
+        } else if (user && user.sisiId) {
           // Шинээр мэдээлэл үүсгэх
           const newUserDetails = {
             firstName: values.firstName,
@@ -129,7 +137,7 @@ export default function ProfilePage() {
             university: values.university,
             courseYear: values.courseYear,
             registerNumber: values.registerNumber,
-            authUserId: user.id
+            sisiId: user.sisiId 
           };
           
           const createdUser = await UserService.createUserDetails(newUserDetails);

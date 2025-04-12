@@ -115,7 +115,7 @@ export default function UsersPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-8">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
           <h1 className="text-3xl font-bold text-gray-900">
-            Хэрэглэгчийн удирдлага
+            Хэрэглэгчийн эрхүүд
           </h1>
           <div className="relative w-full sm:w-64">
             <input
