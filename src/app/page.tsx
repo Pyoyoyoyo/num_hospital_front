@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/dashboard');
+      router.push('/auth/dashboard');
     }
   }, [isAuthenticated, router]);
 
@@ -29,13 +29,13 @@ export default function Home() {
         </p>
         <div className="mt-8 flex justify-center space-x-4">
           <button
-            onClick={() => router.push('/login')}
+            onClick={() => router.push('/auth/login')}
             className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
           >
             Нэвтрэх
           </button>
           <button
-            onClick={() => router.push('/register')}
+            onClick={() => router.push('/auth/register')}
             className="px-8 py-3 border border-indigo-600 text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50"
           >
             Бүртгүүлэх

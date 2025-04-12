@@ -13,7 +13,7 @@ export default function UnauthorizedPage() {
   // Хэрэв хэрэглэгч нэвтрээгүй бол login хуудас руу чиглүүлэх
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/login');
+      router.push('/auth/login');
     }
   }, [isAuthenticated, router]);
 

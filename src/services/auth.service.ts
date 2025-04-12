@@ -12,7 +12,7 @@ export interface LoginRequest {
 }
 
 export interface AuthResponse {
-  id: string;
+  id?: string;
   sisiId: string;
   token: string;
   roles: string[];
@@ -46,11 +46,13 @@ export const AuthService = {
   // Нэвтрэх
   login: async (data: LoginRequest): Promise<AuthResponse> => {
     const response = await api.post<AuthResponse>('/auth/login', data);
-    // Токен болон хэрэглэгчийн мэдээллийг хадгалах
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data));
-    }
+// auth.service.ts файлд login функцийг засварлах
+  if (response.data.token) {
+    const { id, sisiId, token, roles } = response.data;
+    const userToStore = { id, sisiId, token, roles };
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(userToStore));
+  }
     return response.data;
   },
 
@@ -61,26 +63,21 @@ export const AuthService = {
   },
 
   // Токеноос хэрэглэгчийн мэдээлэл авах
-  getCurrentUser: (): AuthResponse | null => {
+  getCurrentUser: (): Omit<AuthResponse, 'id'> | null => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
-      return JSON.parse(userStr);
+      return JSON.parse(userStr) as Omit<AuthResponse, 'id'>;
     }
     return null;
   },
 
   // Хэрэглэгчийн роль шинэчлэх
   updateUserRoles: async (data: { sisiId: string; roles: string[] }): Promise<AuthResponse> => {
-    try {
-      const response = await api.put<AuthResponse>('/auth/update-roles', {
-        sisiId: data.sisiId,
-        roles: data.roles
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error updating user roles:', error);
-      throw error;
-    }
+    const response = await api.put<AuthResponse>('/auth/update-roles', {
+      sisiId: data.sisiId,
+      roles: data.roles
+    });
+    return response.data;
   },
 
   // Хэрэглэгчид роль нэмэх

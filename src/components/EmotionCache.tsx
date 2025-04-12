@@ -4,12 +4,13 @@ import * as React from 'react';
 import type { EmotionCache, Options as EmotionCacheOptions } from '@emotion/cache';
 import { useServerInsertedHTML } from 'next/navigation';
 import createCache from '@emotion/cache';
+import { CacheProvider as EmotionCacheProvider } from '@emotion/react';
 
 // This implementation is taken directly from Material UI's documentation
 // https://mui.com/material-ui/guides/nextjs-app-router/
 export interface NextAppDirEmotionCacheProviderProps {
   options: Omit<EmotionCacheOptions, 'insertionPoint'>;
-  CacheProvider?: React.Provider<EmotionCache>;
+  CacheProvider?: React.ComponentType<React.PropsWithChildren<{value: EmotionCache}>>;
   children: React.ReactNode;
 }
 
@@ -19,19 +20,19 @@ const EmotionCacheContext = React.createContext<EmotionCache | null>(null);
 
 
 export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionCacheProviderProps) {
-  const { options, CacheProvider = EmotionCacheContext.Provider, children } = props;
+  const { options, CacheProvider = EmotionCacheProvider, children } = props;
 
   const [registry] = React.useState(() => {
     const cache = createCache(options);
     cache.compat = true;
     const prevInsert = cache.insert;
     let inserted: string[] = [];
-    cache.insert = (...args) => {
-      const serialized = args[1];
+    cache.insert = function() {
+      const serialized = arguments[1];
       if (cache.inserted[serialized.name] === undefined) {
         inserted.push(serialized.name);
       }
-      return prevInsert(...args);
+      return prevInsert.apply(this, arguments as any);
     };
     const flush = () => {
       const prevInserted = inserted;

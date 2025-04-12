@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api'; // API Gateway URL
+const API_BASE_URL = 'http://localhost:8080/api';
 
 // Axios instance үүсгэх
 const api = axios.create({
@@ -10,7 +10,6 @@ const api = axios.create({
   },
 });
 
-// Хүсэлт бүрд токен дамжуулах interceptor
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -24,13 +23,11 @@ api.interceptors.request.use(
   }
 );
 
-// Хариулт хүлээн авах interceptor
 api.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    // 401 алдаа гарвал token устгаж, нэвтрэх хуудас руу чиглүүлэх
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

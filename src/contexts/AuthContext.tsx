@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    // Хэрэв local storage-д хэрэглэгчийн мэдээлэл байвал түүнийг ашиглана
     const initAuth = async () => {
       try {
         const storedUser = AuthService.getCurrentUser();
@@ -53,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await AuthService.login(data);
       setUser(response);
       enqueueSnackbar('Амжилттай нэвтэрлээ!', { variant: 'success' });
-      router.push('/dashboard');
+      router.push('/auth/dashboard');
     } catch (error: any) {
       enqueueSnackbar(error.response?.data?.message || 'Нэвтрэх үед алдаа гарлаа', { variant: 'error' });
       throw error;
@@ -67,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
       await AuthService.register(data);
       enqueueSnackbar('Амжилттай бүртгүүллээ. Одоо нэвтрэх боломжтой!', { variant: 'success' });
-      router.push('/login');
+      router.push('/auth/login');
     } catch (error: any) {
       enqueueSnackbar(error.response?.data?.message || 'Бүртгүүлэх үед алдаа гарлаа', { variant: 'error' });
       throw error;
@@ -79,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     AuthService.logout();
     setUser(null);
-    router.push('/login');
+    router.push('/auth/login');
     enqueueSnackbar('Амжилттай гарлаа', { variant: 'info' });
   };
 
