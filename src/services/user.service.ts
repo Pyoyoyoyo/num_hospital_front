@@ -1,6 +1,5 @@
 import api from './api';
 
-// API Gateway дээр тохируулсан user-detail-service зам
 const USER_DETAIL_API_URL = 'http://localhost:8080/api/user-details';
 
 class UserService {
@@ -10,7 +9,6 @@ class UserService {
    */
   async getUserDetailsBySisiId(sisiId: string) {
     try {
-      // API endpoint-ийг Gateway ашиглаж дуудах
       const response = await api.get(`${USER_DETAIL_API_URL}/sisi-user/${sisiId}`);
       return response.data;
     } catch (error) {
@@ -49,4 +47,4 @@ class UserService {
   }
 }
 
-export default new UserService(); 
+export default new UserService();

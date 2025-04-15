@@ -11,6 +11,10 @@ const validationSchema = yup.object({
   sisiId: yup
     .string()
     .required('Хэрэглэгчийн нэр оруулна уу'),
+  phoneNumber: yup
+    .string()
+    .matches(/^[0-9]{8}$/, 'Утасны дугаар 8 оронтой байх ёстой')
+    .required('Утасны дугаар оруулна уу'),
   password: yup
     .string()
     .min(6, 'Нууц үг 6-с дээш тэмдэгт байх ёстой')
@@ -36,6 +40,7 @@ export default function RegisterPage() {
   const formik = useFormik({
     initialValues: {
       sisiId: '',
+      phoneNumber: '',
       password: '',
       confirmPassword: '',
     },
@@ -44,7 +49,8 @@ export default function RegisterPage() {
       try {
         await register({
           sisiId: values.sisiId,
-          password: values.password,
+          phoneNumber: values.phoneNumber,
+          password: values.password
         });
       } catch (error: any) {
         console.error('Registration error:', error);
@@ -106,6 +112,26 @@ export default function RegisterPage() {
               {formik.touched.sisiId && formik.errors.sisiId && (
                 <p className="mt-2 text-sm text-red-600" id="sisiId-error">
                   {formik.errors.sisiId}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <div className="relative">
+                <label htmlFor="phoneNumber" className="sr-only">Утасны дугаар</label>
+                <input
+                  id="phoneNumber"
+                  type="text"
+                  autoComplete="tel"
+                  required
+                  className={`appearance-none rounded-md relative block w-full px-3 py-2 border ${formik.touched.phoneNumber && formik.errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm`}
+                  placeholder="Утасны дугаар (8 орон)"
+                  {...formik.getFieldProps('phoneNumber')}
+                />
+              </div>
+              {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                <p className="mt-2 text-sm text-red-600" id="phoneNumber-error">
+                  {formik.errors.phoneNumber}
                 </p>
               )}
             </div>

@@ -2,7 +2,8 @@ import api from './api';
 
 export interface RegisterRequest {
   sisiId: string;
-  password: string;
+  password?: string;
+  phoneNumber?: string;
   roles?: string[];
 }
 
@@ -14,6 +15,7 @@ export interface LoginRequest {
 export interface AuthResponse {
   id?: string;
   sisiId: string;
+  phoneNumber?: string;
   token: string;
   roles: string[];
 }

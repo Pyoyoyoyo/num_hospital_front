@@ -45,9 +45,9 @@ const Navbar = () => {
   };
 
   const navigationItems = [
-    { text: 'Нүүр', icon: <Icons.Dashboard />, href: '/auth/dashboard', roles: ['ROLE_USER', 'ROLE_ADMIN'] },
-    { text: 'Эрхүүд', icon: <Icons.Person />, href: '/auth/users', roles: ['ROLE_ADMIN'] },
-    // { text: 'Тохиргоо', icon: <Icons.Admin />, href: '/auth/settings', roles: ['ROLE_ADMIN'] }, // Example for Admin role
+    { name: 'Үндсэн', href: '/auth/dashboard', icon: <Icons.Dashboard />, roles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE'] },
+    { name: 'Хэрэглэгч бүртгэх', href: '/auth/register-patient', icon: <Icons.Person />, roles: ['ROLE_ADMIN', 'ROLE_DOCTOR'] },
+    { name: 'Хэрэглэгчийн эрх', href: '/auth/users', icon: <Icons.Admin />, roles: ['ROLE_ADMIN'] },
   ];
 
   const filteredNavItems = navigationItems.filter(item =>
@@ -86,12 +86,12 @@ const Navbar = () => {
                 <div className="flex space-x-4">
                   {filteredNavItems.map((item) => (
                       <button
-                          key={item.text}
+                          key={item.name}
                           onClick={() => navigate(item.href)}
                           className="flex items-center text-blue-100 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
                           <span className="mr-2">{item.icon}</span>
-                          {item.text}
+                          {item.name}
                       </button>
                   ))}
                 </div>
@@ -179,12 +179,12 @@ const Navbar = () => {
          <nav className="mt-4 px-2">
             {filteredNavItems.map((item) => (
                 <button
-                    key={item.text}
+                    key={item.name}
                     onClick={() => navigate(item.href)}
                     className="w-full flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 mb-1"
                 >
                     <span className="mr-3">{item.icon}</span>
-                    {item.text}
+                    {item.name}
                 </button>
             ))}
             <hr className="my-4" />
